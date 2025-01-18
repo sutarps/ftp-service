@@ -67,5 +67,7 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
       - name: Use context
         run: kubectl config use-context kubernetes-admin@kubernetes
+      - name: Kubernetes dryrun
+        run: kubectl apply -k kubernetes/overlays/dev/ -n dev --dry-run=ftp-service
       - name: Deploy to cluster
         run: kubectl apply -k kubernetes/overlays/dev/ -n dev
