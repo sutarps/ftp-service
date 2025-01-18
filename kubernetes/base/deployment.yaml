@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ftp-service-service
+  labels:
+    app: ftp-service
+spec:
+  selector:
+    matchLabels:
+      app: ftp-service
+  template:
+    metadata:
+      labels:
+        app: ftp-service
+      annotations:
+        instrumentation.opentelemetry.io/inject-java: "true"
+    spec:
+      hostNetwork: false
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ftp-service-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ftp-service-service
+  template:
+    metadata:
+      labels:
+        app: ftp-service-service
+    spec:
+      containers:
+        - name: ftp-service-service
+          image: ghcr.io/sutarps/ftp-service:latest
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: 400m
+              memory: 512Mi
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod
+            - name: JAVA_OPTIONS
+              value: -Dspring.profiles.active=prod

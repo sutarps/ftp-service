@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+  title: ftp service application
+  description: Sample ftp server application in docker container
+  version: 1.0.0
+servers:
+  - url: http://ftp-server.com/v1
+    description: Main application url
+paths:
+  /file/upload:
+    post:
+      tags:
+        - FtpAPI
+      summary: Upload file to ftp server
+      operationId: uploadFile
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: File uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileAttributes'
+        '400':
+          description: Bac request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+
+    FileAttributes:
+      type: object
+      properties:
+        filePath:
+          type: string
+        fileSize:
+          type: integer
+          format: int64
+
+    Error:
+      type: object
+      properties:
+        errorMessage:
+          type: string
