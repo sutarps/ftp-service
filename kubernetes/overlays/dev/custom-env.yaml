@@ -29,8 +29,7 @@ spec:
               memory: 512Mi
           volumeMounts:
             - name: ftp-storage
-              persistentVolumeClaim:
-                claimName: /ftp-data
+              mountPath: /ftp-data
       volumes:
         - name: ftp-storage
           persistentVolumeClaim:
