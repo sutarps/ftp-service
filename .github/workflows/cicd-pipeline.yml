@@ -68,6 +68,6 @@ jobs:
       - name: Use context
         run: kubectl config use-context kubernetes-admin@kubernetes
       - name: Kubernetes dryrun
-        run: kubectl apply -k kubernetes/overlays/dev/ -n dev --dry-run=ftp-service
+        run: kubectl apply -k kubernetes/overlays/dev/ -n dev --dry-run=client
       - name: Deploy to cluster
         run: kubectl apply -k kubernetes/overlays/dev/ -n dev
