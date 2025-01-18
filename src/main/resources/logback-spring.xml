@@ -2,7 +2,7 @@
 <configuration>
     <appender name="JSON_CONSOLE" class = "ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-            <customFields>{"application":"customerinfo"}</customFields>
+            <customFields>{"application":"ftp-service"}</customFields>
         </encoder>
     </appender>
     <root level="info">
