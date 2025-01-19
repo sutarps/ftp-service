@@ -4,6 +4,7 @@ import org.openapitools.api.FileApi;
 import org.openapitools.model.FileAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -25,10 +26,14 @@ import java.util.List;
 @RestController
 public class FTPController implements FileApi {
     private static final Logger logger = LoggerFactory.getLogger(FTPController.class);
-    private static final String STORAGE_PATH = "/ftp-data/";
+    @Value("${storage.path:\"c://temp/\"}")
+    private String STORAGE_PATH;
+
+
 
     @Override
     public ResponseEntity<FileAttributes> uploadFile(MultipartFile file) {
+        logger.info("File received name {} ", file.getOriginalFilename());
         FileAttributes fileAttributes = new FileAttributes();
         fileAttributes.setFilePath(STORAGE_PATH + file.getOriginalFilename());
         fileAttributes.setFileSize(file.getSize());
@@ -46,6 +51,7 @@ public class FTPController implements FileApi {
 
     @GetMapping("/files")
     public ResponseEntity<List<String>> browseFiles() {
+        logger.info("Request received to get list of files");
         File folder = new File(STORAGE_PATH);
         File[] listOfFiles = folder.listFiles();
         List<String> fileNames = new ArrayList<>();
