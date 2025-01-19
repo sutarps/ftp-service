@@ -27,10 +27,8 @@ spec:
             limits:
               cpu: 400m
               memory: 512Mi
-          volumeMounts:
-            - name: ftp-storage
-              mountPath: /ftp-data
-      volumes:
-        - name: ftp-storage
-          persistentVolumeClaim:
-            claimName: ftp-pvc
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: dev
+            - name: JAVA_OPTIONS
+              value: -Dspring.profiles.active=prod
