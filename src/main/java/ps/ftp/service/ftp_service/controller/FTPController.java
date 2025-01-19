@@ -26,7 +26,7 @@ import java.util.List;
 @RestController
 public class FTPController implements FileApi {
     private static final Logger logger = LoggerFactory.getLogger(FTPController.class);
-    @Value("${storage.path:\"c://temp/\"}")
+    @Value("${storage.path:${java.io.tmpdir}}")
     private String STORAGE_PATH;
 
 
