@@ -26,7 +26,7 @@ import java.util.List;
 @RestController
 public class FTPController implements FileApi {
     private static final Logger logger = LoggerFactory.getLogger(FTPController.class);
-    @Value("${storage.path:${java.io.tmpdir}}")
+    @Value("${storage.path:${java.io.tmpdir/}}")
     private String STORAGE_PATH;
 
 
@@ -52,8 +52,10 @@ public class FTPController implements FileApi {
     @GetMapping("/files")
     public ResponseEntity<List<String>> browseFiles() {
         logger.info("Request received to get list of files");
+        File[] listOfFiles = null;
         File folder = new File(STORAGE_PATH);
-        File[] listOfFiles = folder.listFiles();
+        if(folder.isDirectory())
+             listOfFiles = folder.listFiles();
         List<String> fileNames = new ArrayList<>();
 
         if (listOfFiles != null) {
@@ -62,6 +64,10 @@ public class FTPController implements FileApi {
                     fileNames.add(file.getName());
                 }
             }
+        }else {
+            List<String> response = new ArrayList<>();
+            response.add("No files exists");
+            return ResponseEntity.ok(response);
         }
 
         return ResponseEntity.ok(fileNames);
